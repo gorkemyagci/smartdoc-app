@@ -7,9 +7,9 @@ import { Loader2 } from "lucide-react";
 
 const AuthCallback = ({ origin }: { origin: string }) => {
   const router = useRouter();
-  const { data, error, isLoading } = trpc.authCallback.useQuery(undefined, {
-    onSuccess: ({ success }) => {
-      if (success) {
+  trpc.authCallback.useQuery(undefined, {
+    onSuccess: ({ user }) => {
+      if (user) {
         router.push(origin ? `/${origin}` : pageUrls.DASHBOARD);
       }
     },
@@ -21,8 +21,6 @@ const AuthCallback = ({ origin }: { origin: string }) => {
     retry: true,
     retryDelay: 500,
   });
-
-  console.log("Data:", data);
 
   return (
     <div className="w-full mt-24 flex justify-center">
